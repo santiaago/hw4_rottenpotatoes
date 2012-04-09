@@ -33,16 +33,6 @@ class MoviesController < ApplicationController
   def new
     # default: render 'new' template
   end
-  def similar_movies
-    begin
-      @movies = Movie.similar_movies(params[:id])
-      logger.info("@movies=#{@movies.inspect}")
-    rescue Movie::NoDirectorError => error
-      logger.info("Got Movie::NoDirectorError")
-      flash[:notice] = error.message
-      redirect_to '/'
-    end
-  end
 
   def create
     @movie = Movie.create!(params[:movie])
@@ -66,6 +56,17 @@ class MoviesController < ApplicationController
     @movie.destroy
     flash[:notice] = "Movie '#{@movie.title}' deleted."
     redirect_to movies_path
+  end
+  #sim
+  def similar_movies
+    begin
+      @movies = Movie.similar_movies(params[:id])
+      logger.info("@movies=#{@movies.inspect}")
+    rescue Movie::NoDirectorError => error
+      logger.info("Got Movie::NoDirectorError")
+      flash[:notice] = error.message
+      redirect_to '/'
+    end
   end
 
 end

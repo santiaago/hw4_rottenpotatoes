@@ -4,12 +4,12 @@ class Movie < ActiveRecord::Base
   end
   class Movie::NoDirectorError < StandardError; end
   def self.similar_movies(id)
-    m = Movie.find id
-    logger.info "movie=#{m.inspect}"
+    movie = Movie.find id
+    logger.info "movie=#{movie.inspect}"
     unless m.director.blank?
-      Movie.find_all_by_director m.director
+      Movie.find_all_by_director movie.director
     else
-      raise Movie::NoDirectorError, "'#{m.title}' has no director info"
+      raise Movie::NoDirectorError, "'#{movie.title}' has no director info"
     end
   end
   def similar_movies
