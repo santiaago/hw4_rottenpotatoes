@@ -6,7 +6,7 @@ class Movie < ActiveRecord::Base
   def self.similar_movies(id)
     movie = Movie.find id
     logger.info "movie=#{movie.inspect}"
-    unless m.director.blank?
+    unless movie.director.blank?
       Movie.find_all_by_director movie.director
     else
       raise Movie::NoDirectorError, "'#{movie.title}' has no director info"
